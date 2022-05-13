@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = ({ dataObj, el, id }) => {
+const Card = ({ dataObj, el, cardId }) => {
   const { title, content } = dataObj;
 
   return (

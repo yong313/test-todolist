@@ -5,9 +5,8 @@ export const taskSlice = createSlice({
   initialState: {
     defaultData: ["backlog", "inprogress", "done"],
     modalOpen: false,
-    logid: null,
+    logId: null,
     el: null,
-    curr: null,
     editBtn: false,
     backlog: [],
     inprogress: [],
@@ -17,6 +16,7 @@ export const taskSlice = createSlice({
   reducers: {
     ADD_MODAL_OPEN: (state, action) => {
       state.modalOpen = !state.modalOpen;
+      state.logId = null;
       state.el = action.payload;
       state.editBtn = false;
     },

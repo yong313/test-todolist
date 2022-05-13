@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { ADD_MODAL_OPEN } from "../modules/taskSlice";
 
-const AddBtn = ({ el }) => {
+const AddBtn = ({ el, id }) => {
   const dispatch = useDispatch();
 
   const openModalHandler = useCallback(() => {
-    dispatch(ADD_MODAL_OPEN({ el }));
-  }, [dispatch, el]);
+    dispatch(ADD_MODAL_OPEN({ el, id }));
+  }, [dispatch, el, id]);
 
   return (
     <AddBtnBox>

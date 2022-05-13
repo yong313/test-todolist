@@ -35,10 +35,10 @@ const List = ({ el, id }) => {
         <Title id={id} el={el} />
         <CardContent ref={TaskScroll}>
           {showTask.map((dataObj, idx) => (
-            <Card dataObj={dataObj} key={idx} el={el} id={id} />
+            <Card dataObj={dataObj} key={idx} el={el} cardId={idx} />
           ))}
         </CardContent>
-        <AddBtn el={el} />
+        <AddBtn el={el} id={id} />
       </ListBox>
       {showModal ? <Modal /> : null}
     </>
@@ -46,7 +46,7 @@ const List = ({ el, id }) => {
 };
 
 const ListBox = styled.div`
-  width: 20%;
+  width: 16.5%;
   height: 100%;
   background-color: #eeeffc;
   border-radius: 20px;
@@ -56,7 +56,7 @@ const ListBox = styled.div`
     margin-right: 0;
   }
 
-  animation: listAnime 0.65s ease;
+  animation: listAnime 0.55s ease;
   @keyframes listAnime {
     from {
       opacity: 0;

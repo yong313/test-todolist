@@ -6,7 +6,6 @@ import { ADD_MODAL_OPEN, ADD_TASK } from "../modules/taskSlice";
 const Modal = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const modalTitle = useSelector((state) => state.task.el);
   const showBtn = useSelector((state) => state.task.editBtn);
   const dispatch = useDispatch();
   const titleRef = useRef(null);
@@ -23,13 +22,13 @@ const Modal = () => {
     dispatch(ADD_MODAL_OPEN());
   }, [dispatch]);
 
-  // 테스크 추가
+  // 카드 추가
   const addTaskHandler = useCallback(() => {
     if (title.length && content.length >= 1) {
-      dispatch(ADD_TASK({ title, content, modalTitle }));
+      dispatch(ADD_TASK({ title, content }));
       closeModalHandler();
     }
-  }, [closeModalHandler, content, dispatch, title, modalTitle]);
+  }, [closeModalHandler, content, dispatch, title]);
 
   return (
     <ModalBox>
