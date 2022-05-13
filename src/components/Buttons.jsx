@@ -4,6 +4,7 @@ import { IoMdClose } from "react-icons/io";
 
 const Buttons = (props) => {
   const {
+    addList,
     createBtn,
     addBtn,
     editBtn,
@@ -20,6 +21,16 @@ const Buttons = (props) => {
     _onClick: () => {},
     _onChange: () => {},
   };
+
+  if (addList) {
+    return (
+      <>
+        <AddListBox onClick={_onClick}>
+          <h1>리스트 추가하기</h1>
+        </AddListBox>
+      </>
+    );
+  }
 
   if (closeBtn) {
     return (
@@ -162,6 +173,21 @@ const CloseBtn = styled.button`
 
   :hover {
     color: #ff7a7a;
+  }
+  :not(:hover) {
+    color: #ccc;
+  }
+`;
+
+const AddListBox = styled.button`
+  width: auto;
+  height: auto;
+  font-size: 1.25rem;
+  font-weight: bold;
+  transition: all 0.35s ease;
+
+  :hover {
+    color: #404df7;
   }
   :not(:hover) {
     color: #ccc;

@@ -6,6 +6,7 @@ export const taskSlice = createSlice({
     defaultData: ["backlog", "inprogress", "done"],
     modalOpen: false,
     detailModalOpen: false,
+    listModalOpen: false,
     detailInfo: [],
     listTitle: null,
     cardId: null,
@@ -16,6 +17,15 @@ export const taskSlice = createSlice({
   },
 
   reducers: {
+    // 리스트 모달
+    LIST_MODAL_OPEN: (state) => {
+      state.listModalOpen = !state.listModalOpen;
+    },
+    // 리스트 추가
+    ADD_LIST: (state, action) => {
+      state.defaultData = [...state.defaultData, action.payload.title];
+      console.log(action);
+    },
     // 만들기 모달
     ADD_MODAL_OPEN: (state, action) => {
       state.modalOpen = !state.modalOpen;
@@ -78,6 +88,8 @@ export const taskSlice = createSlice({
 });
 
 export const {
+  LIST_MODAL_OPEN,
+  ADD_LIST,
   ADD_MODAL_OPEN,
   ADD_CARD,
   DETAIL_MODAL_OPEN,
