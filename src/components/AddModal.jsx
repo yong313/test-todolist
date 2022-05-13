@@ -4,7 +4,7 @@ import Buttons from "./Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_MODAL_OPEN, ADD_CARD, EDIT_CARD } from "../modules/taskSlice";
 
-const Modal = ({ el }) => {
+const Modal = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const showEditBtn = useSelector((state) => state.task.editBtn);
@@ -32,20 +32,10 @@ const Modal = ({ el }) => {
 
   // 카드 수정
   const editCardHandler = useCallback(() => {
-    if (el === "backlog") {
-      if (title.length && content.length >= 1) {
-        dispatch(EDIT_CARD({ title, content }));
-      }
-    } else if (el === "inprogress") {
-      if (title.length && content.length >= 1) {
-        dispatch(EDIT_CARD({ title, content }));
-      }
-    } else if (el === "done") {
-      if (title.length && content.length >= 1) {
-        dispatch(EDIT_CARD({ title, content }));
-      }
+    if (title.length && content.length >= 1) {
+      dispatch(EDIT_CARD({ title, content }));
     }
-  }, [content, dispatch, el, title]);
+  }, [content, dispatch, title]);
 
   return (
     <ModalBox>
@@ -101,6 +91,7 @@ const ModalBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9;
 
   animation: modalBgAnime 0.65s ease;
   @keyframes modalBgAnime {

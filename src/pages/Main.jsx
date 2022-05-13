@@ -23,10 +23,8 @@ const Main = () => {
         <AddListBtnBox>
           <Buttons addList _onClick={addListModalHandler} />
         </AddListBtnBox>
-        {showListModal ? (
-          <ListModal closeHandler={addListModalHandler} />
-        ) : null}
       </MainBox>
+      {showListModal ? <ListModal closeHandler={addListModalHandler} /> : null}
     </>
   );
 };
@@ -34,6 +32,7 @@ const Main = () => {
 const MainBox = styled.div`
   width: 100%;
   height: 100vh;
+  overflow-x: scroll;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

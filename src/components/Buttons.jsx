@@ -102,6 +102,7 @@ const Buttons = (props) => {
 const CreateBtn = styled.button`
   font-size: 1.15rem;
   font-weight: bold;
+  z-index: 1;
 
   :hover {
     transition: all 0.35s ease;

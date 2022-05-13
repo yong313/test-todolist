@@ -3,27 +3,19 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import Title from "./Title";
 import Card from "./Card";
-import Modal from "./Modal";
-import DetailModal from "./DetatilModal";
+import AddModal from "./AddModal";
+import DetailModal from "./DetailModal";
 import Buttons from "./Buttons";
 import { ADD_MODAL_OPEN } from "../modules/taskSlice";
 
 const List = ({ el }) => {
   const showModal = useSelector((state) => state.task.modalOpen);
   const showDetailModal = useSelector((state) => state.task.detailModalOpen);
-  const showTask = useSelector((state) => {
-    if (el === "backlog") {
-      return state.task.backlog;
-    } else if (el === "inprogress") {
-      return state.task.inprogress;
-    } else if (el === "done") {
-      return state.task.done;
-    }
-  });
+  const showTask = useSelector((state) => state.task[el]);
   const dispatch = useDispatch();
 
   const openModalHandler = useCallback(() => {
-    dispatch(ADD_MODAL_OPEN({ el }));
+    dispatch(ADD_MODAL_OPEN(el));
   }, [dispatch, el]);
 
   // 카드 추가 시 하단 스크롤 하단으로 고정
@@ -49,7 +41,7 @@ const List = ({ el }) => {
         <AddBtnBox>
           <Buttons createBtn el={el} _onClick={openModalHandler} />
         </AddBtnBox>
-        {showModal ? <Modal el={el} /> : null}
+        {showModal ? <AddModal /> : null}
         {showDetailModal ? <DetailModal /> : null}
       </ListBox>
     </>

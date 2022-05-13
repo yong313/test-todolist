@@ -7,13 +7,13 @@ const Card = ({ dataObj, el, cardId }) => {
   const { title, content } = dataObj;
 
   const dispatch = useDispatch();
-  const openDatailModalHandler = useCallback(() => {
+  const openDetailModalHandler = useCallback(() => {
     dispatch(DETAIL_MODAL_OPEN({ el, cardId }));
   }, [dispatch, el, cardId]);
 
   return (
     <>
-      <CardBox onClick={openDatailModalHandler}>
+      <CardBox onClick={openDetailModalHandler}>
         <CardTitle>{title}</CardTitle>
         <CardContent>{content}</CardContent>
       </CardBox>

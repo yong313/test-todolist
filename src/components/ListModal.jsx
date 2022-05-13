@@ -53,13 +53,14 @@ const ListModal = ({ closeHandler }) => {
 const ListModalBox = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: rgba(42, 50, 151, 0.1);
+  background-color: rgba(42, 50, 151, 0.3);
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9;
 
   animation: modalBgAnime 0.65s ease;
   @keyframes modalBgAnime {
@@ -73,7 +74,7 @@ const ListModalBox = styled.div`
 `;
 
 const Content = styled.div`
-  width: 30%;
+  width: 28%;
   height: auto;
   border-radius: 20px;
   background-color: #eeeffc;
@@ -96,7 +97,7 @@ const Content = styled.div`
   }
 
   @media (min-width: 1920px) {
-    width: 24.5%;
+    width: 20.5%;
   }
 `;
 

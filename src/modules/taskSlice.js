@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const taskSlice = createSlice({
   name: "task",
   initialState: {
-    defaultData: ["backlog", "inprogress", "done"],
+    defaultData: ["백로그", "진행중", "완료"],
     modalOpen: false,
     detailModalOpen: false,
     listModalOpen: false,
@@ -11,9 +11,9 @@ export const taskSlice = createSlice({
     listTitle: null,
     cardId: null,
     editBtn: false,
-    backlog: [],
-    inprogress: [],
-    done: [],
+    백로그: [],
+    진행중: [],
+    완료: [],
   },
 
   reducers: {
@@ -24,7 +24,8 @@ export const taskSlice = createSlice({
     // 리스트 추가
     ADD_LIST: (state, action) => {
       state.defaultData = [...state.defaultData, action.payload.title];
-      console.log(action);
+      state[action.payload.title] = [];
+      state.listModalOpen = false;
     },
     // 만들기 모달
     ADD_MODAL_OPEN: (state, action) => {
@@ -34,13 +35,14 @@ export const taskSlice = createSlice({
     },
     // 만들기 모달 => 카드 추가
     ADD_CARD: (state, action) => {
-      if (state.listTitle.el === "backlog") {
-        state.backlog = [...state.backlog, action.payload];
-      } else if (state.listTitle.el === "inprogress") {
-        state.inprogress = [...state.inprogress, action.payload];
-      } else if (state.listTitle.el === "done") {
-        state.done = [...state.done, action.payload];
-      }
+      // if (state.listTitle.el === "backlog") {
+      //   state.backlog = [...state.backlog, action.payload];
+      // } else if (state.listTitle.el === "inprogress") {
+      //   state.inprogress = [...state.inprogress, action.payload];
+      // } else if (state.listTitle.el === "done") {
+      //   state.done = [...state.done, action.payload];
+      // }
+      state[state.listTitle] = [...state[state.listTitle], action.payload];
       state.modalOpen = false;
     },
     // 디테일 모달
@@ -50,19 +52,11 @@ export const taskSlice = createSlice({
     },
     // 디테일 모달 => 삭제
     DELETE_CARD: (state, action) => {
-      if (state.detailInfo.el === "backlog") {
-        state.backlog = state.backlog.filter((_, idx) => {
-          return idx !== action.payload.getCardInfo.cardId;
-        });
-      } else if (state.detailInfo.el === "inprogress") {
-        state.inprogress = state.inprogress.filter((_, idx) => {
-          return idx !== action.payload.getCardInfo.cardId;
-        });
-      } else if (state.detailInfo.el === "done") {
-        state.done = state.done.filter((_, idx) => {
-          return idx !== action.payload.getCardInfo.cardId;
-        });
-      }
+      state[action.payload.getCardInfo.el] = state[
+        action.payload.getCardInfo.el
+      ].filter((_, idx) => {
+        return idx !== action.payload.getCardInfo.cardId;
+      });
       state.detailModalOpen = false;
     },
     // 수정 모달
@@ -70,18 +64,19 @@ export const taskSlice = createSlice({
       state.detailModalOpen = false;
       state.modalOpen = true;
       state.editBtn = true;
-      state.listTitle = action.payload.getCardInfo.el;
+      state.listTitle = action.payload.getCardInfo;
       state.cardId = action.payload.getCardInfo.cardId;
     },
     // 수정 모달 => 수정
     EDIT_CARD: (state, action) => {
-      if (state.listTitle === "backlog") {
-        state.backlog[state.cardId] = action.payload;
-      } else if (state.listTitle === "inprogress") {
-        state.inprogress[state.cardId] = action.payload;
-      } else if (state.listTitle === "done") {
-        state.done[state.cardId] = action.payload;
-      }
+      // if (state.listTitle === "backlog") {
+      //   state.backlog[state.cardId] = action.payload;
+      // } else if (state.listTitle === "inprogress") {
+      //   state.inprogress[state.cardId] = action.payload;
+      // } else if (state.listTitle === "done") {
+      //   state.done[state.cardId] = action.payload;
+      // }
+      state[state.listTitle.el][state.cardId] = action.payload;
       state.modalOpen = false;
     },
   },

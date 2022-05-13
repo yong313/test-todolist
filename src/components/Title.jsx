@@ -3,27 +3,12 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 const Title = ({ el }) => {
-  let titleText = () => {
-    if (el === "backlog") {
-      return <h1>백로그</h1>;
-    } else if (el === "inprogress") {
-      return <h1>진행중</h1>;
-    } else if (el === "done") {
-      return <h1>완료</h1>;
-    }
-  };
-
-  const titleColor = useSelector((state) => {
-    if (el === "backlog") {
-      return state.task.backlog.length;
-    } else if (el === "inprogress") {
-      return state.task.inprogress.length;
-    } else if (el === "done") {
-      return state.task.done.length;
-    }
-  });
-
-  return <TitleBox titleColor={titleColor > 0}>{titleText()}</TitleBox>;
+  const titleColor = useSelector((state) => state.task[el].length);
+  return (
+    <TitleBox titleColor={titleColor > 0}>
+      <h1>{el}</h1>
+    </TitleBox>
+  );
 };
 
 const TitleBox = styled.div`
@@ -37,7 +22,7 @@ const TitleBox = styled.div`
   transition: all 0.85s ease;
 
   h1 {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
     font-weight: bold;
   }
 `;

@@ -11,15 +11,9 @@ import Buttons from "./Buttons";
 const DetailModal = () => {
   const dispatch = useDispatch();
   const getCardInfo = useSelector((state) => state.task.detailInfo);
-  const showCardContent = useSelector((state) => {
-    if (getCardInfo.el === "backlog") {
-      return state.task.backlog[getCardInfo.cardId];
-    } else if (getCardInfo.el === "inprogress") {
-      return state.task.inprogress[getCardInfo.cardId];
-    } else if (getCardInfo.el === "done") {
-      return state.task.done[getCardInfo.cardId];
-    }
-  });
+  const showCardContent = useSelector(
+    (state) => state.task[getCardInfo.el][getCardInfo.cardId]
+  );
 
   // 디테일 모달 닫기
   const closeModalHandler = useCallback(() => {
@@ -27,25 +21,15 @@ const DetailModal = () => {
   }, [dispatch]);
 
   // 수정 모달 열기
-  const editModalHandelr = useCallback(() => {
-    if (getCardInfo.el === "backlog") {
-      dispatch(EDIT_MODAL_OPEN({ getCardInfo }));
-    } else if (getCardInfo.el === "inprogress") {
-      dispatch(EDIT_MODAL_OPEN({ getCardInfo }));
-    } else if (getCardInfo.el === "done") {
+  const editModalHandler = useCallback(() => {
+    if (getCardInfo.el) {
       dispatch(EDIT_MODAL_OPEN({ getCardInfo }));
     }
   }, [dispatch, getCardInfo]);
 
   // 카드 삭제 하기
   const deleteCardHandler = useCallback(() => {
-    if (getCardInfo.el === "backlog") {
-      dispatch(DELETE_CARD({ getCardInfo }));
-    } else if (getCardInfo.el === "inprogress") {
-      dispatch(DELETE_CARD({ getCardInfo }));
-    } else if (getCardInfo.el === "done") {
-      dispatch(DELETE_CARD({ getCardInfo }));
-    }
+    dispatch(DELETE_CARD({ getCardInfo }));
   }, [dispatch, getCardInfo]);
 
   return (
@@ -66,7 +50,7 @@ const DetailModal = () => {
             </TextBox>
           </ContentBox>
           <ButtonBox>
-            <Buttons editBtn _onClick={editModalHandelr} />
+            <Buttons editBtn _onClick={editModalHandler} />
             <Buttons deleteBtn _onClick={deleteCardHandler} />
           </ButtonBox>
         </Contain>
