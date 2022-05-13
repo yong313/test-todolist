@@ -10,7 +10,7 @@ const Main = () => {
     <>
       <MainBox>
         {defaultData.map((el, idx) => {
-          return <List key={idx} el={el} id={idx} />;
+          return <List key={idx} el={el} />;
         })}
       </MainBox>
     </>

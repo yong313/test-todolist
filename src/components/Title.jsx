@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-const Title = ({ id, el }) => {
+const Title = ({ el }) => {
   let titleText = () => {
-    if (id === 0) {
+    if (el === "backlog") {
       return <h1>백로그</h1>;
-    } else if (id === 1) {
+    } else if (el === "inprogress") {
       return <h1>진행중</h1>;
-    } else if (id === 2) {
+    } else if (el === "done") {
       return <h1>완료</h1>;
     }
   };

@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { DETAIL_MODAL_OPEN } from "../modules/taskSlice";
 
 const Card = ({ dataObj, el, cardId }) => {
   const { title, content } = dataObj;
 
+  const dispatch = useDispatch();
+  const openDatailModalHandler = useCallback(() => {
+    dispatch(DETAIL_MODAL_OPEN({ el, cardId }));
+  }, [dispatch, el, cardId]);
+
   return (
     <>
-      <CardBox>
+      <CardBox onClick={openDatailModalHandler}>
         <CardTitle>{title}</CardTitle>
         <CardContent>{content}</CardContent>
       </CardBox>

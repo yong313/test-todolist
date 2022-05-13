@@ -1,13 +1,16 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Title from "./Title";
-import AddBtn from "./AddBtn";
 import Card from "./Card";
 import Modal from "./Modal";
+import DetailModal from "./DetatilModal";
+import Buttons from "./Buttons";
+import { ADD_MODAL_OPEN } from "../modules/taskSlice";
 
-const List = ({ el, id }) => {
+const List = ({ el }) => {
   const showModal = useSelector((state) => state.task.modalOpen);
+  const showDetailModal = useSelector((state) => state.task.detailModalOpen);
   const showTask = useSelector((state) => {
     if (el === "backlog") {
       return state.task.backlog;
@@ -17,6 +20,11 @@ const List = ({ el, id }) => {
       return state.task.done;
     }
   });
+  const dispatch = useDispatch();
+
+  const openModalHandler = useCallback(() => {
+    dispatch(ADD_MODAL_OPEN({ el }));
+  }, [dispatch, el]);
 
   // 카드 추가 시 하단 스크롤 하단으로 고정
   const TaskScroll = useRef();
@@ -32,21 +40,24 @@ const List = ({ el, id }) => {
   return (
     <>
       <ListBox>
-        <Title id={id} el={el} />
+        <Title el={el} />
         <CardContent ref={TaskScroll}>
           {showTask.map((dataObj, idx) => (
             <Card dataObj={dataObj} key={idx} el={el} cardId={idx} />
           ))}
         </CardContent>
-        <AddBtn el={el} id={id} />
+        <AddBtnBox>
+          <Buttons createBtn el={el} _onClick={openModalHandler} />
+        </AddBtnBox>
+        {showModal ? <Modal el={el} /> : null}
+        {showDetailModal ? <DetailModal /> : null}
       </ListBox>
-      {showModal ? <Modal /> : null}
     </>
   );
 };
 
 const ListBox = styled.div`
-  width: 16.5%;
+  width: 13.5%;
   height: 100%;
   background-color: #eeeffc;
   border-radius: 20px;
@@ -72,6 +83,15 @@ const CardContent = styled.div`
   height: 80%;
   overflow-y: scroll;
   padding: 0 20px;
+`;
+
+const AddBtnBox = styled.div`
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 20px;
 `;
 
 export default List;
