@@ -123,6 +123,16 @@ const ErrorMsgBox = styled.div`
     color: #ff7a7a;
     font-size: 1.15rem;
     font-weight: bold;
+
+    animation: errorMsgAnime 0.75s ease;
+    @keyframes errorMsgAnime {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   }
 `;
 
