@@ -1,16 +1,12 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { ADD_MODAL_OPEN } from "../modules/taskSlice";
 import Title from "./Title";
 import Card from "./Card";
-import AddModal from "./AddModal";
-import DetailModal from "./DetailModal";
 import Buttons from "./Buttons";
-import { ADD_MODAL_OPEN } from "../modules/taskSlice";
 
 const List = ({ el }) => {
-  const showModal = useSelector((state) => state.task.modalOpen);
-  const showDetailModal = useSelector((state) => state.task.detailModalOpen);
   const showTask = useSelector((state) => state.task[el]);
   const dispatch = useDispatch();
 
@@ -41,19 +37,20 @@ const List = ({ el }) => {
         <AddBtnBox>
           <Buttons createBtn el={el} _onClick={openModalHandler} />
         </AddBtnBox>
-        {showModal ? <AddModal /> : null}
-        {showDetailModal ? <DetailModal /> : null}
       </ListBox>
     </>
   );
 };
 
 const ListBox = styled.div`
-  width: 13.5%;
-  height: 100%;
+  flex: 0 0 14%;
+  min-width: 14%;
+  max-width: 14%;
+  height: 97.5%;
   background-color: #eeeffc;
   border-radius: 20px;
   margin-right: 30px;
+  scroll-snap-align: start;
 
   :last-child {
     margin-right: 0;
@@ -67,6 +64,12 @@ const ListBox = styled.div`
     to {
       opacity: 1;
     }
+  }
+
+  @media (min-width: 1920px) {
+    flex: 0 0 10.5%;
+    min-width: 10.5%;
+    max-width: 10.5%;
   }
 `;
 

@@ -84,7 +84,7 @@ const Modal = () => {
 const ModalBox = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: rgba(42, 50, 151, 0.1);
+  background-color: rgba(42, 50, 151, 0.3);
   position: fixed;
   top: 0;
   left: 0;
@@ -93,7 +93,7 @@ const ModalBox = styled.div`
   justify-content: center;
   z-index: 9;
 
-  animation: modalBgAnime 0.65s ease;
+  animation: modalBgAnime 0.35s ease;
   @keyframes modalBgAnime {
     from {
       opacity: 0;

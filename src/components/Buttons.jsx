@@ -17,11 +17,6 @@ const Buttons = (props) => {
     el,
   } = props;
 
-  Buttons.defaultProps = {
-    _onClick: () => {},
-    _onChange: () => {},
-  };
-
   if (addList) {
     return (
       <>
@@ -183,7 +178,7 @@ const CloseBtn = styled.button`
 const AddListBox = styled.button`
   width: auto;
   height: auto;
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   font-weight: bold;
   transition: all 0.35s ease;
 

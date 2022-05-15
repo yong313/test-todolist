@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const taskSlice = createSlice({
   name: "task",
   initialState: {
-    defaultData: ["백로그", "진행중", "완료"],
+    defaultData: ["대기중", "진행중", "완료"],
     modalOpen: false,
     detailModalOpen: false,
     listModalOpen: false,
@@ -11,21 +11,28 @@ export const taskSlice = createSlice({
     listTitle: null,
     cardId: null,
     editBtn: false,
-    백로그: [],
+    대기중: [],
     진행중: [],
     완료: [],
+    errorMsg: false,
   },
 
   reducers: {
     // 리스트 모달
     LIST_MODAL_OPEN: (state) => {
+      state.errorMsg = false;
       state.listModalOpen = !state.listModalOpen;
     },
     // 리스트 추가
     ADD_LIST: (state, action) => {
-      state.defaultData = [...state.defaultData, action.payload.title];
-      state[action.payload.title] = [];
-      state.listModalOpen = false;
+      state.errorMsg = state.defaultData.find((el) => {
+        return el === action.payload.title;
+      });
+      if (!state.errorMsg) {
+        state.defaultData = [...state.defaultData, action.payload.title];
+        state[action.payload.title] = [];
+        state.listModalOpen = false;
+      }
     },
     // 만들기 모달
     ADD_MODAL_OPEN: (state, action) => {
@@ -35,13 +42,6 @@ export const taskSlice = createSlice({
     },
     // 만들기 모달 => 카드 추가
     ADD_CARD: (state, action) => {
-      // if (state.listTitle.el === "backlog") {
-      //   state.backlog = [...state.backlog, action.payload];
-      // } else if (state.listTitle.el === "inprogress") {
-      //   state.inprogress = [...state.inprogress, action.payload];
-      // } else if (state.listTitle.el === "done") {
-      //   state.done = [...state.done, action.payload];
-      // }
       state[state.listTitle] = [...state[state.listTitle], action.payload];
       state.modalOpen = false;
     },
@@ -69,13 +69,6 @@ export const taskSlice = createSlice({
     },
     // 수정 모달 => 수정
     EDIT_CARD: (state, action) => {
-      // if (state.listTitle === "backlog") {
-      //   state.backlog[state.cardId] = action.payload;
-      // } else if (state.listTitle === "inprogress") {
-      //   state.inprogress[state.cardId] = action.payload;
-      // } else if (state.listTitle === "done") {
-      //   state.done[state.cardId] = action.payload;
-      // }
       state[state.listTitle.el][state.cardId] = action.payload;
       state.modalOpen = false;
     },

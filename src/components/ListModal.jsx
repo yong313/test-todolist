@@ -1,11 +1,12 @@
 import React, { useRef, useState, useCallback } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Buttons from "./Buttons";
 import { ADD_LIST } from "../modules/taskSlice";
 
 const ListModal = ({ closeHandler }) => {
   const [title, setTitle] = useState("");
+  const showErrorMsg = useSelector((state) => state.task.errorMsg);
   const titleRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -36,6 +37,11 @@ const ListModal = ({ closeHandler }) => {
               />
             </div>
           </InputBox>
+          <ErrorMsgBox>
+            {showErrorMsg ? (
+              <h1>이미 사용 중인 리스트 이름이 있습니다 😅</h1>
+            ) : null}
+          </ErrorMsgBox>
           <ButtonBox>
             <Buttons
               addBtn
@@ -62,7 +68,7 @@ const ListModalBox = styled.div`
   justify-content: center;
   z-index: 9;
 
-  animation: modalBgAnime 0.65s ease;
+  animation: modalBgAnime 0.35s ease;
   @keyframes modalBgAnime {
     from {
       opacity: 0;
@@ -106,7 +112,18 @@ const InputBox = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
+`;
+
+const ErrorMsgBox = styled.div`
+  width: 80%;
+  height: auto;
+  padding: 15px 18px 25px 18px;
+
+  h1 {
+    color: #ff7a7a;
+    font-size: 1.15rem;
+    font-weight: bold;
+  }
 `;
 
 const Label = styled.h1`

@@ -17,7 +17,9 @@ const TitleBox = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 20px;
+  white-space: nowrap;
+  overflow: scroll;
+  padding: 0 20px;
   color: ${(props) => (props.titleColor ? "#404df7" : "#ccc")};
   transition: all 0.85s ease;
 
