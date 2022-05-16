@@ -116,12 +116,13 @@ const InputBox = styled.div`
 
 const ErrorMsgBox = styled.div`
   width: 80%;
-  height: auto;
-  padding: 15px 18px 25px 18px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
 
   h1 {
     color: #ff7a7a;
-    font-size: 1.15rem;
+    font-size: 1rem;
     font-weight: bold;
 
     animation: errorMsgAnime 0.75s ease;
