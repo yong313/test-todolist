@@ -1,12 +1,13 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { ADD_MODAL_OPEN } from "../modules/taskSlice";
 import Title from "./Title";
 import Card from "./Card";
 import Buttons from "./Buttons";
+import { Droppable } from "react-beautiful-dnd";
 
-const List = ({ el }) => {
+const List = ({ el, elId, index }) => {
   const showTask = useSelector((state) => state.task[el]);
   const dispatch = useDispatch();
 
@@ -15,25 +16,47 @@ const List = ({ el }) => {
   }, [dispatch, el]);
 
   // 카드 추가 시 하단 스크롤 하단으로 고정
-  const TaskScroll = useRef();
-  const scrollToBottom = () => {
-    if (TaskScroll.current) {
-      TaskScroll.current.scrollTop = TaskScroll.current.scrollHeight;
-    }
-  };
-  useEffect(() => {
-    scrollToBottom();
-  }, [showTask.length]);
+  // const TaskScroll = useRef();
+  // const scrollToBottom = () => {
+  //   if (TaskScroll.current) {
+  //     TaskScroll.current.scrollTop = TaskScroll.current.scrollHeight;
+  //   }
+  // };
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [showTask.length]);
 
   return (
     <>
       <ListBox>
         <Title el={el} />
-        <CardContent ref={TaskScroll}>
-          {showTask.map((dataObj, idx) => (
-            <Card dataObj={dataObj} key={idx} el={el} cardId={idx} />
-          ))}
-        </CardContent>
+        <Droppable droppableId={elId} key={elId}>
+          {(provided, snapshot) => {
+            return (
+              <CardContent
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                style={{
+                  background: snapshot.isDraggingOver ? "#7e87f9" : "#eeeffc",
+                  width: "100%",
+                  minHeight: "auto",
+                }}
+              >
+                {showTask.map((dataObj, taskId) => (
+                  <Card
+                    dataObj={dataObj}
+                    key={taskId}
+                    el={el}
+                    cardId={taskId}
+                    elId={elId}
+                    index={index}
+                  />
+                ))}
+                {provided.placeholder}
+              </CardContent>
+            );
+          }}
+        </Droppable>
         <AddBtnBox>
           <Buttons createBtn el={el} _onClick={openModalHandler} />
         </AddBtnBox>

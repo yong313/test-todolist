@@ -2,8 +2,9 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { DETAIL_MODAL_OPEN } from "../modules/taskSlice";
+import { Draggable } from "react-beautiful-dnd";
 
-const Card = ({ dataObj, el, cardId }) => {
+const Card = ({ dataObj, el, cardId, elId, index }) => {
   const { title, content } = dataObj;
 
   const dispatch = useDispatch();
@@ -13,10 +14,30 @@ const Card = ({ dataObj, el, cardId }) => {
 
   return (
     <>
-      <CardBox onClick={openDetailModalHandler}>
-        <CardTitle>{title}</CardTitle>
-        <CardContent>{content}</CardContent>
-      </CardBox>
+      <Draggable key={elId} draggableId={elId} index={index}>
+        {(provided, snapshot) => {
+          return (
+            <CardBox
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              style={{
+                userSelect: "none",
+                // padding: 16,
+                // margin: "0 0 8px 0",
+                // minHeight: "50px",
+                backgroundColor: snapshot.isDragging ? "#323fe3" : "#fff",
+                color: snapshot.isDragging ? "#fff" : "#323fe3",
+                ...provided.draggableProps.style,
+              }}
+              onClick={openDetailModalHandler}
+            >
+              <CardTitle>{title}</CardTitle>
+              <CardContent>{content}</CardContent>
+            </CardBox>
+          );
+        }}
+      </Draggable>
     </>
   );
 };
@@ -36,8 +57,9 @@ const CardBox = styled.div`
   }
 
   :hover {
-    color: #fff;
-    background: linear-gradient(140deg, #7e87f9, #323fe3);
+    color: #fff !important;
+    background-color: #323fe3 !important;
+    /* background: linear-gradient(140deg, #7e87f9, #323fe3); */
   }
 
   :not(:hover) {
