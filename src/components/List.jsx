@@ -8,23 +8,12 @@ import Buttons from "./Buttons";
 import { Droppable } from "react-beautiful-dnd";
 
 const List = ({ el, elId, index }) => {
-  const showTask = useSelector((state) => state.task[el]);
+  const showCards = useSelector((state) => state.task[el]);
   const dispatch = useDispatch();
 
   const openModalHandler = useCallback(() => {
     dispatch(ADD_MODAL_OPEN(el));
   }, [dispatch, el]);
-
-  // 카드 추가 시 하단 스크롤 하단으로 고정
-  // const TaskScroll = useRef();
-  // const scrollToBottom = () => {
-  //   if (TaskScroll.current) {
-  //     TaskScroll.current.scrollTop = TaskScroll.current.scrollHeight;
-  //   }
-  // };
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [showTask.length]);
 
   return (
     <>
@@ -42,12 +31,12 @@ const List = ({ el, elId, index }) => {
                   minHeight: "auto",
                 }}
               >
-                {showTask.map((dataObj, taskId) => (
+                {showCards.map((dataObj, cardId) => (
                   <Card
                     dataObj={dataObj}
-                    key={taskId}
+                    key={cardId}
                     el={el}
-                    cardId={taskId}
+                    cardId={cardId}
                     elId={elId}
                     index={index}
                   />

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import List from "../components/List";
 import Buttons from "../components/Buttons";
@@ -11,7 +11,6 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 const Main = () => {
   const defaultData = useSelector((state) => state.task.defaultData);
-  const [el, setEl] = useState(defaultData);
   const showListModal = useSelector((state) => state.task.listModalOpen);
   const showModal = useSelector((state) => state.task.modalOpen);
   const showDetailModal = useSelector((state) => state.task.detailModalOpen);
@@ -21,54 +20,32 @@ const Main = () => {
     dispatch(LIST_MODAL_OPEN());
   }, [dispatch]);
 
-  const onDragEnd = (result, el, setEl) => {
+  const onDragEnd = (result, defaultData) => {
     if (!result.destination) return;
-    const { source, destination } = result;
+    console.log(result);
 
-    if (source.droppableId !== destination.droppableId) {
-      const sourceColumn = el[source.droppableId];
-      const destColumn = el[destination.droppableId];
-      const sourceItems = [...sourceColumn.items];
-      const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, removed);
-      setEl({
-        ...el,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      });
+    const startIndex = result.source.index;
+    const endIndex = result.destination.index;
+    const sourceArray = defaultData[result.source.droppableId];
+    const destinationArray = defaultData[result.destination.droppableId];
+    const [removed] = sourceArray.splice(startIndex, 1);
+    if (result.source.droppableId === result.destination.droppableId) {
+      sourceArray.splice(endIndex, 0, removed);
+      this.el[result.destination.droppableId] = sourceArray;
     } else {
-      const column = el[source.droppableId];
-      const copiedItems = [...column.items];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
-      setEl({
-        ...el,
-        [source.droppableId]: {
-          ...column,
-          items: copiedItems,
-        },
-      });
+      destinationArray.splice(endIndex, 0, removed);
+      this.el[result.source.droppableId] = sourceArray;
+      this.el[result.destination.droppableId] = destinationArray;
     }
   };
 
   return (
     <>
       <MainBox>
-        <DragDropContext onDragEnd={(result) => onDragEnd(result, el, setEl)}>
-          {Object.entries(el).map(([elId, el], index) => {
+        <DragDropContext onDragEnd={(result) => onDragEnd(result, defaultData)}>
+          {Object.entries(defaultData).map(([elId, el], index) => {
             return <List key={elId} el={el} index={index} elId={elId} />;
           })}
-          {/* 기존
-          {defaultData.map((el, idx) => {
-            return <List key={idx} el={el} />;
-          })} */}
         </DragDropContext>
       </MainBox>
 

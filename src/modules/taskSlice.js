@@ -33,7 +33,6 @@ export const taskSlice = createSlice({
         state[action.payload.title] = [];
         state.listModalOpen = false;
       }
-      console.log(action);
     },
     // 만들기 모달
     ADD_MODAL_OPEN: (state, action) => {
