@@ -6,7 +6,6 @@ import { Draggable } from "react-beautiful-dnd";
 
 const Card = ({ dataObj, el, cardId, elId, index }) => {
   const { title, content } = dataObj;
-
   const dispatch = useDispatch();
   const openDetailModalHandler = useCallback(() => {
     dispatch(DETAIL_MODAL_OPEN({ el, cardId }));
@@ -14,7 +13,7 @@ const Card = ({ dataObj, el, cardId, elId, index }) => {
 
   return (
     <>
-      <Draggable key={elId} draggableId={elId} index={index}>
+      <Draggable key={cardId} draggableId={elId} index={index}>
         {(provided, snapshot) => {
           return (
             <CardBox

@@ -11,6 +11,8 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 const Main = () => {
   const defaultData = useSelector((state) => state.task.defaultData);
+  // const showCards = useSelector((state) => state.task[el]);
+  // console.log(showCards);
   const showListModal = useSelector((state) => state.task.listModalOpen);
   const showModal = useSelector((state) => state.task.modalOpen);
   const showDetailModal = useSelector((state) => state.task.detailModalOpen);
@@ -23,12 +25,12 @@ const Main = () => {
   const onDragEnd = (result, defaultData) => {
     if (!result.destination) return;
     console.log(result);
-
     const startIndex = result.source.index;
     const endIndex = result.destination.index;
     const sourceArray = defaultData[result.source.droppableId];
     const destinationArray = defaultData[result.destination.droppableId];
     const [removed] = sourceArray.splice(startIndex, 1);
+
     if (result.source.droppableId === result.destination.droppableId) {
       sourceArray.splice(endIndex, 0, removed);
       this.el[result.destination.droppableId] = sourceArray;
