@@ -66,43 +66,6 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-const asdf = (result, defaultData) => {
-  if (!result.destination) return;
-  const { source, destination } = result;
-
-  if (source.droppableId !== destination.droppableId) {
-    const sourceList = defaultData[source.droppableId];
-    const destList = defaultData[destination.droppableId];
-    // card 부분
-    const sourceCards = [...sourceList.items];
-    const destCards = [...destList.items];
-    const [removed] = sourceCards.splice(source.index, 1);
-    sourceCards.splice(destination.index, 0, removed);
-    defaultData({
-      ...defaultData,
-      [source.droppableId]: {
-        ...sourceList,
-        items: sourceCards,
-      },
-      [destination.droppableId]: {
-        ...destCards,
-        items: destCards,
-      },
-    });
-  } else {
-    const list = defaultData[source.droppableId];
-    const copiedItems = [...list.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    defaultData({
-      ...defaultData,
-      [source.droppableId]: {
-        ...list,
-      },
-    });
-  }
-};
-
 function App() {
   const [columns, setColumns] = useState(columnsFromBackend);
   return (

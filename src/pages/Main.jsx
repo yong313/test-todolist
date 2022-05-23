@@ -11,8 +11,6 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 const Main = () => {
   const defaultData = useSelector((state) => state.task.defaultData);
-  // const showCards = useSelector((state) => state.task[el]);
-  // console.log(showCards);
   const showListModal = useSelector((state) => state.task.listModalOpen);
   const showModal = useSelector((state) => state.task.modalOpen);
   const showDetailModal = useSelector((state) => state.task.detailModalOpen);
